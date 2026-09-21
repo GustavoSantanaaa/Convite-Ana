@@ -1,0 +1,7 @@
+{
+  "name": "convite-ana-beatriz-21-anos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Página de convite com confirmação de presença por e-mail, pronta para deploy na Vercel."
+}

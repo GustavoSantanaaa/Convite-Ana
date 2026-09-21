@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aniversário Ana Beatriz - 21 anos</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+<style>
+  :root {
+    --pink-dark: #d81b60;
+    --pink-mid: #ec4899;
+    --pink-light: #fbcfe8;
+    --cream: #f7ede4;
+    --cream-2: #fdf8f4;
+    --text: #6b2140;
+    --ok: #16a34a;
+    --danger: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+    padding-top: calc(24px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+  }
+  .card {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(216, 27, 96, 0.15);
+    overflow: hidden;
+    border: 1px solid var(--pink-light);
+  }
+  .invite-img {
+    width: 100%;
+    display: block;
+  }
+  .content { padding: 28px 24px 32px; }
+  h2 {
+    text-align: center;
+    color: var(--pink-dark);
+    font-size: 1.3rem;
+    letter-spacing: .04em;
+    margin: 0 0 20px;
+    text-transform: uppercase;
+  }
+  .details { background: var(--cream); border-radius: 16px; padding: 18px 20px; margin-bottom: 22px; }
+  .details p { margin: 8px 0; font-size: 1rem; line-height: 1.4; }
+  .details strong { color: var(--pink-dark); }
+  .actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 18px; border-radius: 14px; text-decoration: none;
+    font-weight: 600; font-size: 1rem; border: none; cursor: pointer;
+    transition: transform .15s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-maps { background: #fff; color: var(--pink-dark); border: 2px solid var(--pink-mid); }
+  .btn-whats { background: #25D366; color: #fff; }
+  form { border-top: 2px dashed var(--pink-light); padding-top: 24px; }
+  form h3 { color: var(--pink-dark); font-size: 1.05rem; margin: 0 0 16px; text-align: center; }
+  label { display: block; font-size: .85rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  input[type="text"], input[type="number"] {
+    width: 100%; padding: 12px 14px; border-radius: 12px;
+    border: 1.5px solid var(--pink-light); font-size: 1rem; margin-bottom: 16px;
+    background: var(--cream-2); color: var(--text);
+  }
+  input:focus { outline: 2px solid var(--pink-mid); }
+  .radio-group { display: flex; gap: 10px; margin-bottom: 18px; }
+  .radio-option { flex: 1; position: relative; }
+  .radio-option input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .radio-option span {
+    display: block; text-align: center; padding: 12px 8px; border-radius: 12px;
+    border: 2px solid var(--pink-light); font-weight: 600; color: var(--text); font-size: .95rem;
+  }
+  .radio-option input:checked + span { border-color: var(--pink-mid); background: var(--pink-light); color: var(--pink-dark); }
+  #companions-wrap { margin-bottom: 4px; }
+  #companions-list { display: flex; flex-direction: column; gap: 0; }
+  .companion-field label { font-size: .8rem; opacity: .85; }
+  .btn-submit { width: 100%; background: var(--pink-dark); color: #fff; padding: 15px; font-size: 1.05rem; margin-top: 8px; }
+  .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+  .status-msg { text-align: center; margin-top: 14px; font-size: .9rem; display: none; }
+  .status-msg.show { display: block; }
+  .status-ok { color: var(--ok); }
+  .status-err { color: var(--danger); }
+  .confirmed-box { text-align: center; padding: 20px; background: var(--cream); border-radius: 16px; }
+  .confirmed-box .emoji { font-size: 2.5rem; }
+  .confirmed-box p { margin: 6px 0; }
+  .edit-link {
+    display: inline-block; margin-top: 10px; font-size: .85rem; color: var(--pink-dark);
+    text-decoration: underline; cursor: pointer; background: none; border: none;
+  }
+  .footer-note { text-align: center; font-size: .78rem; color: var(--pink-dark); opacity: .7; margin-top: 18px; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --cream: #2a1420; --cream-2: #1f0f18; --text: #f3d9e6; --pink-light: #6b2140;
+    }
+    :root:not([data-theme="light"]) body { background: linear-gradient(180deg, #1a0c12 0%, #120810 100%); }
+    :root:not([data-theme="light"]) .card { background: #26121c; border-color: #6b2140; }
+    :root:not([data-theme="light"]) .btn-maps { background: #26121c; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="invite-img" src="assets/convite.jpg" alt="Convite de aniversário de Ana Beatriz, 21 anos">
+    <div class="content">
+      <h2>Confirme sua presença</h2>
+
+      <div class="details">
+        <p>🎂 <strong>Aniversariante:</strong> Ana Beatriz — 21 anos</p>
+        <p>🕐 <strong>Horário:</strong> 13:00</p>
+        <p>📅 <strong>Data:</strong> 18 de outubro</p>
+        <p>📍 <strong>Local:</strong> R. Savério Quadrio, 621 — Parque Ipê</p>
+        <p>🎉 <strong>Salão de festa adulto</strong></p>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-maps" href="https://www.google.com/maps/search/?api=1&query=R.+Sav%C3%A9rio+Quadrio%2C+621%2C+Parque+Ip%C3%AA" target="_blank" rel="noopener">
+          📍 Ver localização no Maps
+        </a>
+        <a class="btn btn-whats" href="https://wa.me/5511983762048?text=Oi!%20Vim%20pelo%20convite%20de%20anivers%C3%A1rio%20da%20Ana%20Beatriz%20😊" target="_blank" rel="noopener">
+          💬 Falar no WhatsApp
+        </a>
+      </div>
+
+      <div id="rsvp-area">
+        <form id="rsvp-form">
+          <h3>Presença confirmada?</h3>
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+
+          <label for="acompanhantes">Número de acompanhantes</label>
+          <input type="number" id="acompanhantes" name="acompanhantes" min="0" max="10" value="0">
+
+          <div id="companions-wrap">
+            <div id="companions-list"></div>
+          </div>
+
+          <label>Vai comparecer?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="presenca" value="sim" checked>
+              <span>✅ Sim</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="presenca" value="nao">
+              <span>❌ Não</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-submit" id="submit-btn">Confirmar presença</button>
+          <div class="status-msg" id="status-msg"></div>
+        </form>
+
+        <div class="confirmed-box" id="confirmed-box" style="display:none;">
+          <div class="emoji">🎉</div>
+          <p id="confirmed-text"></p>
+          <button class="edit-link" id="edit-btn">Editar minha confirmação</button>
+        </div>
+      </div>
+
+      <p class="footer-note">Sua confirmação é enviada diretamente por e-mail para a organização da festa 💌</p>
+    </div>
+  </div>
+
+<script>
+(function () {
+  const form = document.getElementById('rsvp-form');
+  const statusMsg = document.getElementById('status-msg');
+  const submitBtn = document.getElementById('submit-btn');
+  const confirmedBox = document.getElementById('confirmed-box');
+  const confirmedText = document.getElementById('confirmed-text');
+  const editBtn = document.getElementById('edit-btn');
+  const acompanhantesInput = document.getElementById('acompanhantes');
+  const companionsList = document.getElementById('companions-list');
+
+  const LS_KEY = 'aniversario-ana-rsvp';
+
+  function renderCompanionFields(count) {
+    companionsList.innerHTML = '';
+    const n = Math.max(0, Math.min(10, parseInt(count, 10) || 0));
+    for (let i = 0; i < n; i++) {
+      const wrap = document.createElement('div');
+      wrap.className = 'companion-field';
+      wrap.innerHTML = `
+        <label for="companion-${i}">Nome do acompanhante ${i + 1}</label>
+        <input type="text" id="companion-${i}" class="companion-input" placeholder="Nome completo">
+      `;
+      companionsList.appendChild(wrap);
+    }
+  }
+
+  acompanhantesInput.addEventListener('input', function () {
+    renderCompanionFields(this.value);
+  });
+  renderCompanionFields(acompanhantesInput.value);
+
+  function showConfirmed(data) {
+    form.style.display = 'none';
+    confirmedBox.style.display = 'block';
+    if (data.presenca === 'sim') {
+      confirmedText.textContent = data.nome + ', sua presença foi confirmada! ' +
+        (data.acompanhantes > 0 ? '(+' + data.acompanhantes + ' acompanhante' + (data.acompanhantes > 1 ? 's' : '') + ')' : '');
+    } else {
+      confirmedText.textContent = data.nome + ', que pena! Sentiremos sua falta 💔';
+    }
+  }
+
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) showConfirmed(JSON.parse(raw));
+  } catch (e) { /* ignore */ }
+
+  editBtn.addEventListener('click', function () {
+    form.style.display = 'block';
+    confirmedBox.style.display = 'none';
+  });
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value.trim();
+    const acompanhantes = parseInt(acompanhantesInput.value || '0', 10);
+    const presenca = form.querySelector('input[name="presenca"]:checked').value;
+    const nomesAcompanhantes = Array.from(document.querySelectorAll('.companion-input'))
+      .map(function (el) { return el.value.trim(); })
+      .filter(Boolean);
+
+    if (!nome) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    statusMsg.className = 'status-msg';
+
+    const payload = { nome, acompanhantes, nomesAcompanhantes, presenca, timestamp: Date.now() };
+
+    try {
+      const resp = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!resp.ok) throw new Error('Falha no envio');
+
+      try { localStorage.setItem(LS_KEY, JSON.stringify(payload)); } catch (e) {}
+
+      statusMsg.textContent = 'Confirmação enviada com sucesso!';
+      statusMsg.className = 'status-msg show status-ok';
+      setTimeout(function () { showConfirmed(payload); }, 600);
+    } catch (err) {
+      statusMsg.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+      statusMsg.className = 'status-msg show status-err';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Confirmar presença';
+    }
+  });
+})();
+</script>
+</body>
+</html>
